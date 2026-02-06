@@ -10,10 +10,12 @@ import {
   PoModalModule,
   PoModalComponent,
   PoModalAction,
-  PoInfoModule
+  PoInfoModule,
+  PoButtonModule
 } from '@po-ui/ng-components';
 import { AprovalService } from '../../shared/services/aproval.service';
 import { IAproval } from '../../shared/models/aproval.model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-aproval',
@@ -24,7 +26,9 @@ import { IAproval } from '../../shared/models/aproval.model';
     PoTableModule, 
     PoFieldModule, 
     PoModalModule, 
-    PoInfoModule
+    PoInfoModule,
+    FormsModule,
+    PoButtonModule
   ],
   providers: [CurrencyPipe],
   templateUrl: './aproval.component.html'
@@ -32,6 +36,7 @@ import { IAproval } from '../../shared/models/aproval.model';
 export class AprovalComponent implements OnInit {
   
   @ViewChild('confirmModal', { static: true }) poModal!: PoModalComponent;
+  @ViewChild('justifModal', { static: true }) justifModal!: PoModalComponent;
 
   // Variáveis de Estado usando a nomenclatura Protheus
   items: IAproval[] = [];          
@@ -142,9 +147,30 @@ export class AprovalComponent implements OnInit {
     }
   }
 
+  justifDetail: string = '';
+
+  // Altere a ação de Rejeitar na tabela para abrir o modal em vez de excluir direto
   private reject(row: IAproval) {
-    this.poNotification.warning(`Documento ${row.CR_NUM} foi rejeitado.`);
-    this.items = this.items.filter(item => item.CR_NUM !== row.CR_NUM);
-    this.filteredItems = this.filteredItems.filter(item => item.CR_NUM !== row.CR_NUM);
+    this.selectedRow = row;
+    this.justifDetail = ''; // Limpa o texto anterior
+    
+    this.justifModal.open(); 
+  }
+
+  // Nova função para processar a rejeição com o texto
+  confirmReject() {
+    if (!this.justifDetail || this.justifDetail.length < 5) {
+      this.poNotification.warning('Por favor, detalhe o motivo da rejeição (mínimo 5 caracteres).');
+      return;
+    }
+
+    const numDoc = this.selectedRow?.CR_NUM;
+    this.poNotification.error(`Documento ${numDoc} rejeitado. Motivo: ${this.justifDetail}`);
+    
+    // Sincroniza as listas
+    this.items = this.items.filter(item => item.CR_NUM !== numDoc);
+    this.filteredItems = this.filteredItems.filter(item => item.CR_NUM !== numDoc);
+    
+    (this as any).justifModal.close();
   }
 }

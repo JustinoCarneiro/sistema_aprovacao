@@ -18,18 +18,24 @@
     p-actions-right="true">
   </po-table>
 
-  <po-modal #confirmModal 
-    p-title="Confirmar Aprovação" 
-    [p-primary-action]="confirmAction"
-    [p-secondary-action]="closeAction">
-    
+  <po-modal #justifModal p-title="Justificativa da Rejeição">
     <div class="po-row">
-      <po-info class="po-md-12" p-label="Nº Documento" [p-value]="selectedRow?.CR_NUM ?? ''"></po-info>
-      <po-info class="po-md-12" p-label="Fornecedor" [p-value]="selectedRow?.CR_FORNECE ?? ''"></po-info>
-      <po-info class="po-md-12" p-label="Valor do Título" [p-value]="(selectedRow?.CR_TOTAL | currency:'BRL') ?? ''"></po-info>
-      <po-info class="po-md-12" p-label="Filial Origem" [p-value]="selectedRow?.CR_FILIAL ?? ''"></po-info>
+      <po-info class="po-md-12" p-label="Documento" [p-value]="selectedRow?.CR_NUM ?? ''"></po-info>
+      
+      <po-textarea
+        class="po-md-12"
+        name="justifDetail"
+        [(ngModel)]="justifDetail"
+        p-label="Motivo da Reprovação"
+        p-help="Explique o porquê este documento não foi aceito"
+        [p-rows]="4">
+      </po-textarea>
     </div>
-    
+  
+    <po-modal-footer>
+      <po-button p-label="Cancelar" (p-click)="justifModal.close()"></po-button>
+      <po-button p-label="Confirmar Rejeição" p-kind="danger" (p-click)="confirmReject()"></po-button>
+    </po-modal-footer>
   </po-modal>
 
 </po-page-default>
