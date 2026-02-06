@@ -1,15 +1,12 @@
-# 🚀 Sistema de Aprovação Protheus (Standalone)
+# 🚀 Sistema de Aprovação Protheus (Angular + PO UI)
 
-Projeto desenvolvido para aprendizado de **Angular 19** e **PO UI**, simulando o fluxo de aprovação de documentos do ERP Protheus (tabela SCR).
+Este repositório contém um portal de aprovações moderno, desenvolvido com **Angular 19** e **PO UI**. O foco é a simulação de processos do ERP Protheus (Tabela SCR).
 
-## 🛠️ Tecnologias e Conceitos
-- **Angular Standalone**: Arquitetura moderna sem a necessidade de NgModules.
-- **PO UI Components**: Uso avançado de `PoTable`, `PoModal` e `PoPageDefault`.
-- **TypeScript Strict**: Tipagem forte para evitar erros de `null` e `undefined`.
-- **Interface Protheus**: Mapeamento de campos técnicos como `CR_NUM`, `CR_TOTAL` e `CR_STATUS`.
+## 💡 Evolução Técnica
+- **Standalone Components**: Arquitetura otimizada e moderna.
+- **Nomenclatura SCR**: Uso de campos oficiais como `CR_NUM`, `CR_TOTAL` e `CR_STATUS`.
+- **UX Segura**: Confirmação de aprovação via Modal para evitar erros operacionais.
 
-## 📖 O que este projeto demonstra?
-1. Lógica de filtro em tempo real (Search).
-2. Sincronização de estados entre listas (Backup vs. Filtro).
-3. Uso de `ViewChild` para manipulação de componentes de UI (Modais).
-4. Feedback visual ao usuário através de notificações.
+## 🛠️ Como executar
+1. `npm install`
+2. `ng serve`
